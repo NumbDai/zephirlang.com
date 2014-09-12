@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Compiler Warnings &mdash; Zephir documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link href="google/g.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="_static/docs.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Zephir documentation" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Optimizations" href="optimizations.html" /> 
+  </head>
+  <body>
+    <div>
+    <div class="related">
+      <ul>
+        <li class="right" >
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="optimizations.html" title="Optimizations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://zephirlang.com">Home</a> &raquo;</li>
+        <li><a href="index.html">Zephir documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+      <table width="100%">
+        <tr>
+      <td class="primary-box" width="20%" valign="top">
+            <!--<div id="searchbox" style="">
+                <form class="search" action="http://readthedocs.org/search/project/" method="get">
+                  <input type="search" name="q" size="15" placeholder="Search">
+                  <input type="submit" value="Go">
+                  <input type="hidden" name="selected_facets" value="project:">
+                </form>
+            </div>
+            <script>
+            (function() {
+              var cx = '009733439235723428699:zsbvcqcfzwa';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//www.google.com/cse/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>-->
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Compiler Warnings</a><ul>
+<li><a class="reference external" href="#unused-variable">unused-variable</a></li>
+<li><a class="reference external" href="#unused-variable-external">unused-variable-external</a></li>
+<li><a class="reference external" href="#possible-wrong-parameter-undefined">possible-wrong-parameter-undefined</a></li>
+<li><a class="reference external" href="#nonexistent-function">nonexistent-function</a></li>
+<li><a class="reference external" href="#nonexistent-class">nonexistent-class</a></li>
+<li><a class="reference external" href="#non-valid-isset">non-valid-isset</a></li>
+<li><a class="reference external" href="#non-array-update">non-array-update</a></li>
+<li><a class="reference external" href="#non-valid-objectupdate">non-valid-objectupdate</a></li>
+<li><a class="reference external" href="#non-valid-fetch">non-valid-fetch</a></li>
+<li><a class="reference external" href="#invalid-array-index">invalid-array-index</a></li>
+<li><a class="reference external" href="#non-array-append">non-array-append</a></li>
+<li><a class="reference external" href="#id1">non-array-append</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="optimizations.html" title="previous chapter">&lt; Optimizations</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="license.html" title="next chapter">License &gt;</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/warnings.txt" rel="nofollow">Show Source</a></li>
+            </ul>
+        </td>
+          <td class="second-box" valign="top">
+            <div class="document">
+                <div class="documentwrapper">
+                  <div class="bodywrapper">
+                    <div class="body" >
+                      
+  <div class="section" id="compiler-warnings">
+<h1>Compiler Warnings<a class="headerlink" href="#compiler-warnings" title="Permalink to this headline">¶</a></h1>
+<p>The compiler raise warnings when it finds situations where the code can be improved or a potential error
+can be avoided.</p>
+<p>Warnings can be enabled via command line parameters or can be added to the config.json to enable or disable
+them permanently:</p>
+<p>You can enable warnings by passing its name prefixed by -w:</p>
+<div class="highlight-bash"><div class="highlight"><pre>zephir -wunused-variable -wnonexistent-function
+</pre></div>
+</div>
+<p>Warnings can be disabled by passing its name prefixed by -W:</p>
+<div class="highlight-bash"><div class="highlight"><pre>zephir -Wunused-variable -Wnonexistent-function
+</pre></div>
+</div>
+<p>The following warnings are supported:</p>
+<div class="section" id="unused-variable">
+<h2>unused-variable<a class="headerlink" href="#unused-variable" title="Permalink to this headline">¶</a></h2>
+<p>Raised when a variable is declared but it is not used within a method. This warning is enabled by default.</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">e</span><span class="p">;</span> <span class="c1">// declared but not used</span>
+
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unused-variable-external">
+<h2>unused-variable-external<a class="headerlink" href="#unused-variable-external" title="Permalink to this headline">¶</a></h2>
+<p>Raised when a parameter is declared but it is not used within a method.</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="c1">// c is not used</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="possible-wrong-parameter-undefined">
+<h2>possible-wrong-parameter-undefined<a class="headerlink" href="#possible-wrong-parameter-undefined" title="Permalink to this headline">¶</a></h2>
+<p>Raised when a method is called with a wrong type for a parameter:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="nx">sum</span><span class="p">(</span><span class="s2">&quot;a string&quot;</span><span class="p">,</span> <span class="s2">&quot;another&quot;</span><span class="p">);</span>  <span class="c1">// wrong parameters passed</span>
+<span class="p">}</span>
+
+<span class="kr">public</span> <span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="kr">int</span> <span class="nx">a</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nonexistent-function">
+<h2>nonexistent-function<a class="headerlink" href="#nonexistent-function" title="Permalink to this headline">¶</a></h2>
+<p>Raised when a non-existent function at compile time is called:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nx">someFunction</span><span class="p">();</span> <span class="c1">// someFunction does not exist</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nonexistent-class">
+<h2>nonexistent-class<a class="headerlink" href="#nonexistent-class" title="Permalink to this headline">¶</a></h2>
+<p>Raised when a non-existent class is used at compile time:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>
+
+    <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="err">\</span><span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// MyClass does not exist</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-valid-isset">
+<h2>non-valid-isset<a class="headerlink" href="#non-valid-isset" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that an &#8216;isset&#8217; operation is being made on a non array or object value:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">isset</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// variable integer &#39;b&#39; used as array</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-array-update">
+<h2>non-array-update<a class="headerlink" href="#non-array-update" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that an array update operation is being made on a non array value:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// variable &#39;b&#39; cannot be used as array</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-valid-objectupdate">
+<h2>non-valid-objectupdate<a class="headerlink" href="#non-valid-objectupdate" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that an object update operation is being made on a non object:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">b</span><span class="o">-&gt;</span><span class="nx">name</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// variable &#39;b&#39; cannot be used as object</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-valid-fetch">
+<h2>non-valid-fetch<a class="headerlink" href="#non-valid-fetch" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that a &#8216;fetch&#8217; operation is being made on a non array or object value:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">,</span> <span class="nx">a</span><span class="p">;</span>
+    <span class="k">fetch</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// variable integer &#39;b&#39; used as array</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="invalid-array-index">
+<h2>invalid-array-index<a class="headerlink" href="#invalid-array-index" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that an invalid array index is used:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">(</span><span class="kd">var</span> <span class="nx">a</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">a</span><span class="p">[</span><span class="nx">b</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-array-append">
+<h2>non-array-append<a class="headerlink" href="#non-array-append" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that an element is being tried to be appended to a non array variable:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">b</span><span class="p">[]</span> <span class="o">=</span> <span class="s2">&quot;some value&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>non-array-append<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Raised when the compiler detects that an element is being tried to be appended to a non array variable:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">some</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">b</span><span class="p">[]</span> <span class="o">=</span> <span class="s2">&quot;some value&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+        <span class="s1">&#39;invalid-return-type&#39;</span>                <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;unreachable-code&#39;</span>                   <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;nonexistant-constant&#39;</span>               <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;not-supported-magic-constant&#39;</span>       <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;non-valid-decrement&#39;</span>                <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;non-valid-increment&#39;</span>                <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;non-valid-clone&#39;</span>                    <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;non-valid-new&#39;</span>                      <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;non-array-access&#39;</span>                   <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;invalid-reference&#39;</span>                  <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;invalid-typeof-comparison&#39;</span>          <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">&#39;conditional-initialization&#39;</span>         <span class="o">=&gt;</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <div class="related">
+      <ul>
+        <li class="right" >
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="optimizations.html" title="Optimizations"
+             >previous</a> |</li> 
+      </ul>
+    </div>
+        <div id="footer">
+
+          <p>Zephir Language is an open source project licensed under
+            <a href="http://zephir-lang.com/license.html">MIT license.</a></p>
+
+          <p>Except where otherwise noted, content on this site is licensed under the
+            <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License.</a></p>
+             Last updated on Apr 27, 2014.
+            V0.4.2 <a href="https://github.com/NumbDai/zephirlang.com">GitHub</a>
+
+          <p>
+             &copy; Copyright 2013-2014, Zephir Team.
+          </p>
+
+        </div>
+
+    </div>
+  </body>
+</html>

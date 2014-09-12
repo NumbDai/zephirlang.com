@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Optimizations &mdash; Zephir documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link href="google/g.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="_static/docs.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Zephir documentation" href="index.html" />
+    <link rel="next" title="Compiler Warnings" href="warnings.html" />
+    <link rel="prev" title="Phpinfo() sections" href="phpinfo.html" /> 
+  </head>
+  <body>
+    <div>
+    <div class="related">
+      <ul>
+        <li class="right" >
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="warnings.html" title="Compiler Warnings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="phpinfo.html" title="Phpinfo() sections"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://zephirlang.com">Home</a> &raquo;</li>
+        <li><a href="index.html">Zephir documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+      <table width="100%">
+        <tr>
+      <td class="primary-box" width="20%" valign="top">
+            <!--<div id="searchbox" style="">
+                <form class="search" action="http://readthedocs.org/search/project/" method="get">
+                  <input type="search" name="q" size="15" placeholder="Search">
+                  <input type="submit" value="Go">
+                  <input type="hidden" name="selected_facets" value="project:">
+                </form>
+            </div>
+            <script>
+            (function() {
+              var cx = '009733439235723428699:zsbvcqcfzwa';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//www.google.com/cse/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>-->
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Optimizations</a><ul>
+<li><a class="reference external" href="#static-type-inference">static-type-inference</a></li>
+<li><a class="reference external" href="#static-type-inference-second-pass">static-type-inference-second-pass</a></li>
+<li><a class="reference external" href="#local-context-pass">local-context-pass</a></li>
+<li><a class="reference external" href="#constant-folding">constant-folding</a></li>
+<li><a class="reference external" href="#static-constant-class-folding">static-constant-class-folding</a></li>
+<li><a class="reference external" href="#call-gatherer-pass">call-gatherer-pass</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="phpinfo.html" title="previous chapter">&lt; Phpinfo() sections</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="warnings.html" title="next chapter">Compiler Warnings &gt;</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/optimizations.txt" rel="nofollow">Show Source</a></li>
+            </ul>
+        </td>
+          <td class="second-box" valign="top">
+            <div class="document">
+                <div class="documentwrapper">
+                  <div class="bodywrapper">
+                    <div class="body" >
+                      
+  <div class="section" id="optimizations">
+<h1>Optimizations<a class="headerlink" href="#optimizations" title="Permalink to this headline">¶</a></h1>
+<p>Because the code in Zephir is sometimes very high-level, a C compiler might not be in the ability to optimize this code enough.</p>
+<p>Zephir, thanks to its AOT compiler, is able to optimize the code at compile time potentially improving its execution time
+or reducing the memory required by the program.</p>
+<p>You can enable optimizations by passing its name prefixed by -f:</p>
+<div class="highlight-bash"><div class="highlight"><pre>zephir -fstatic-type-inference -flocal-context-pass
+</pre></div>
+</div>
+<p>Warnings can be disabled by passing its name prefixed by -fno-:</p>
+<div class="highlight-bash"><div class="highlight"><pre>zephir -fno-static-type-inference -fno-call-gatherer-pass
+</pre></div>
+</div>
+<p>The following optimizations are supported:</p>
+<div class="section" id="static-type-inference">
+<h2>static-type-inference<a class="headerlink" href="#static-type-inference" title="Permalink to this headline">¶</a></h2>
+<p>This compilation pass is very important, since it looks for dynamic variables that can potentially
+transformed into static/primitive types which are better optimized by the underlying compiler.</p>
+<p>The following code use a set dynamic variables to perform some mathematical calculations:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">someCalculations</span><span class="p">(</span><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span> <span class="kd">var</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="kd">let</span> <span class="nx">t</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">a</span> <span class="o">-</span> <span class="nx">i</span><span class="p">),</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Variables &#8216;a&#8217;, &#8216;b&#8217; and &#8216;i&#8217; are used all of them in mathematical operations and can thus be transformed
+into static variables taking advantage of other compilation passes. After this pass, the compiler
+automatically rewrites this code to:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">someCalculations</span><span class="p">(</span><span class="kr">int</span> <span class="nx">a</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kr">int</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="kd">let</span> <span class="nx">t</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">a</span> <span class="o">-</span> <span class="nx">i</span><span class="p">),</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>By disabling this compilation pass, all variables will maintain the type which they were originally declared
+without optimization.</p>
+</div>
+<div class="section" id="static-type-inference-second-pass">
+<h2>static-type-inference-second-pass<a class="headerlink" href="#static-type-inference-second-pass" title="Permalink to this headline">¶</a></h2>
+<p>This enables a second type inference pass which improves the work done based on the data gathered by
+the first static type inference pass.</p>
+</div>
+<div class="section" id="local-context-pass">
+<h2>local-context-pass<a class="headerlink" href="#local-context-pass" title="Permalink to this headline">¶</a></h2>
+<p>This compilation pass moves variables that will be allocated in the heap to the stack.</p>
+</div>
+<div class="section" id="constant-folding">
+<h2>constant-folding<a class="headerlink" href="#constant-folding" title="Permalink to this headline">¶</a></h2>
+<p>Constant folding is the process of simplifying constant expressions at compile time. The following
+code is simplified when this optimization is enabled:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">getValue</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">86400</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Is transformed into:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">getValue</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="mi">216000</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="static-constant-class-folding">
+<h2>static-constant-class-folding<a class="headerlink" href="#static-constant-class-folding" title="Permalink to this headline">¶</a></h2>
+<p>This optimization replaces values at class constants in compile time:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">class</span> <span class="nx">MyClass</span>
+<span class="p">{</span>
+
+        <span class="kr">const</span> <span class="nx">SOME_CONSTANT</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+        <span class="kr">public</span> <span class="kd">function</span> <span class="nx">getValue</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="kr">self</span><span class="o">::</span><span class="nx">SOME_CONSTANT</span><span class="p">;</span>
+        <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Is transformed into:</p>
+<div class="highlight-zephir"><div class="highlight"><pre><span class="kr">class</span> <span class="nx">MyClass</span>
+<span class="p">{</span>
+
+        <span class="kr">const</span> <span class="nx">SOME_CONSTANT</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+        <span class="kr">public</span> <span class="kd">function</span> <span class="nx">getValue</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="mi">100</span><span class="p">;</span>
+        <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="call-gatherer-pass">
+<h2>call-gatherer-pass<a class="headerlink" href="#call-gatherer-pass" title="Permalink to this headline">¶</a></h2>
+<p>This pass counts how many times a function or method is called within the same method.
+This allow the compiler to introduce inline caches to avoid method or function lookups.</p>
+</div>
+</div>
+
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <div class="related">
+      <ul>
+        <li class="right" >
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="warnings.html" title="Compiler Warnings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="phpinfo.html" title="Phpinfo() sections"
+             >previous</a> |</li> 
+      </ul>
+    </div>
+        <div id="footer">
+
+          <p>Zephir Language is an open source project licensed under
+            <a href="http://zephir-lang.com/license.html">MIT license.</a></p>
+
+          <p>Except where otherwise noted, content on this site is licensed under the
+            <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License.</a></p>
+             Last updated on Apr 28, 2014.
+            V0.4.2 <a href="https://github.com/NumbDai/zephirlang.com">GitHub</a>
+
+          <p>
+             &copy; Copyright 2013-2014, Zephir Team.
+          </p>
+
+        </div>
+
+    </div>
+  </body>
+</html>

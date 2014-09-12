@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Zephir Language &mdash; Zephir documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link href="google/g.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="_static/docs.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Zephir documentation" href="#" />
+    <link rel="next" title="Welcome!" href="welcome.html" /> 
+  </head>
+  <body>
+    <div>
+    <div class="related">
+      <ul>
+        <li class="right" >
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="welcome.html" title="Welcome!"
+             accesskey="N">next</a> |</li>
+        <li><a href="http://zephirlang.com">Home</a> &raquo;</li>
+        <li><a href="#">Zephir documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+      <table width="100%">
+        <tr>
+      <td class="primary-box" width="20%" valign="top">
+            <!--<div id="searchbox" style="">
+                <form class="search" action="http://readthedocs.org/search/project/" method="get">
+                  <input type="search" name="q" size="15" placeholder="Search">
+                  <input type="submit" value="Go">
+                  <input type="hidden" name="selected_facets" value="project:">
+                </form>
+            </div>
+            <script>
+            (function() {
+              var cx = '009733439235723428699:zsbvcqcfzwa';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                  '//www.google.com/cse/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>-->
+            <h3><a href="#">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Zephir Language</a><ul>
+<li><a class="reference external" href="#reference">Reference</a><ul>
+</ul>
+</li>
+<li><a class="reference external" href="#other-formats">Other Formats</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Next topic</h4>
+            <p class="topless"><a href="welcome.html" title="next chapter">Welcome! &gt;</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/index.txt" rel="nofollow">Show Source</a></li>
+            </ul>
+        </td>
+          <td class="second-box" valign="top">
+            <div class="document">
+                <div class="documentwrapper">
+                  <div class="bodywrapper">
+                    <div class="body" >
+                      
+  <div class="section" id="zephir-language">
+<h1>Zephir Language<a class="headerlink" href="#zephir-language" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="welcome.html">Welcome!</a><ul>
+<li class="toctree-l2"><a class="reference external" href="welcome.html#some-features">Some features</a></li>
+<li class="toctree-l2"><a class="reference external" href="welcome.html#a-small-taste">A small taste</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="motivation.html">Why Zephir?</a><ul>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#if-you-are-a-php-programmer">If You Are a PHP Programmer...</a></li>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#if-you-are-a-c-programmer">If You Are a C Programmer...</a></li>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#compilation-vs-interpretation">Compilation vs Interpretation</a></li>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#statically-typed-versus-dynamically-typed-languages">Statically Typed Versus Dynamically Typed Languages</a></li>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#compilation-scheme">Compilation Scheme</a></li>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#code-protection">Code Protection</a></li>
+<li class="toctree-l2"><a class="reference external" href="motivation.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="intro.html">Introducing Zephir</a><ul>
+<li class="toctree-l2"><a class="reference external" href="intro.html#hello-world">Hello World!</a></li>
+<li class="toctree-l2"><a class="reference external" href="intro.html#a-taste-of-zephir">A Taste of Zephir</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference external" href="install.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference external" href="install.html#installing-zephir">Installing Zephir</a></li>
+<li class="toctree-l2"><a class="reference external" href="install.html#testing-installation">Testing Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#checking-installation">Checking Installation</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#extension-skeleton">Extension Skeleton</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#adding-our-first-class">Adding our first class</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#initial-testing">Initial Testing</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#a-useful-class">A useful class</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="language.html">Basic Syntax</a><ul>
+<li class="toctree-l2"><a class="reference external" href="language.html#organizing-code-in-files-and-namespaces">Organizing Code in Files and Namespaces</a></li>
+<li class="toctree-l2"><a class="reference external" href="language.html#instruction-separation">Instruction separation</a></li>
+<li class="toctree-l2"><a class="reference external" href="language.html#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference external" href="language.html#variable-declarations">Variable Declarations</a></li>
+<li class="toctree-l2"><a class="reference external" href="language.html#variable-scope">Variable Scope</a></li>
+<li class="toctree-l2"><a class="reference external" href="language.html#super-globals">Super Globals</a></li>
+<li class="toctree-l2"><a class="reference external" href="language.html#local-symbol-table">Local Symbol Table</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="types.html">Types</a><ul>
+<li class="toctree-l2"><a class="reference external" href="types.html#dynamic-type">Dynamic Type</a><ul>
+<li class="toctree-l3"><a class="reference external" href="types.html#boolean">Boolean</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#integer">Integer</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#integer-overflow">Integer overflow</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#float-double">Float/Double</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#string">String</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#arrays">Arrays</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#objects">Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="types.html#static-types">Static Types</a><ul>
+<li class="toctree-l3"><a class="reference external" href="types.html#id1">Boolean</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#integer-unsigned-integer">Integer/Unsigned Integer</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#long-unsigned-long">Long/Unsigned Long</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#char-unsigned-char">Char/Unsigned Char</a></li>
+<li class="toctree-l3"><a class="reference external" href="types.html#id2">String</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="operators.html">Operators</a><ul>
+<li class="toctree-l2"><a class="reference external" href="operators.html#arithmetic-operators">Arithmetic Operators</a></li>
+<li class="toctree-l2"><a class="reference external" href="operators.html#comparison-operators">Comparison Operators</a></li>
+<li class="toctree-l2"><a class="reference external" href="operators.html#logical-operators">Logical Operators</a></li>
+<li class="toctree-l2"><a class="reference external" href="operators.html#bitwise-operators">Bitwise Operators</a></li>
+<li class="toctree-l2"><a class="reference external" href="operators.html#ternary-operator">Ternary Operator</a></li>
+<li class="toctree-l2"><a class="reference external" href="operators.html#special-operators">Special Operators</a><ul>
+<li class="toctree-l3"><a class="reference external" href="operators.html#empty">Empty</a></li>
+<li class="toctree-l3"><a class="reference external" href="operators.html#isset">Isset</a></li>
+<li class="toctree-l3"><a class="reference external" href="operators.html#fetch">Fetch</a></li>
+<li class="toctree-l3"><a class="reference external" href="operators.html#typeof">Typeof</a></li>
+<li class="toctree-l3"><a class="reference external" href="operators.html#type-hints">Type Hints</a></li>
+<li class="toctree-l3"><a class="reference external" href="operators.html#branch-prediction-hints">Branch Prediction Hints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="arrays.html">Arrays</a><ul>
+<li class="toctree-l2"><a class="reference external" href="arrays.html#declaring-array-variables">Declaring Array Variables</a></li>
+<li class="toctree-l2"><a class="reference external" href="arrays.html#creating-arrays">Creating Arrays</a></li>
+<li class="toctree-l2"><a class="reference external" href="arrays.html#updating-arrays">Updating arrays</a></li>
+<li class="toctree-l2"><a class="reference external" href="arrays.html#appending-elements">Appending elements</a></li>
+<li class="toctree-l2"><a class="reference external" href="arrays.html#reading-elements-from-arrays">Reading elements from arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="oop.html">Classes and Objects</a><ul>
+<li class="toctree-l2"><a class="reference external" href="oop.html#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference external" href="oop.html#class-modifiers">Class Modifiers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="oop.html#implementing-methods">Implementing Methods</a><ul>
+<li class="toctree-l3"><a class="reference external" href="oop.html#supported-visibilities">Supported Visibilities</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#supported-modifiers">Supported Modifiers</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#getter-setter-shortcuts">Getter/Setter shortcuts</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#return-type-hints">Return Type Hints</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#return-type-void">Return Type: Void</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#strict-flexible-parameter-data-types">Strict/Flexible Parameter Data-Types</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#read-only-parameters">Read-Only Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="oop.html#implementing-properties">Implementing Properties</a><ul>
+<li class="toctree-l3"><a class="reference external" href="oop.html#updating-properties">Updating Properties</a></li>
+<li class="toctree-l3"><a class="reference external" href="oop.html#reading-properties">Reading Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="oop.html#class-constants">Class Constants</a></li>
+<li class="toctree-l2"><a class="reference external" href="oop.html#calling-methods">Calling Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="builtin-methods.html">Built-In Methods</a><ul>
+<li class="toctree-l2"><a class="reference external" href="builtin-methods.html#string">String</a></li>
+<li class="toctree-l2"><a class="reference external" href="builtin-methods.html#array">Array</a></li>
+<li class="toctree-l2"><a class="reference external" href="builtin-methods.html#char">Char</a></li>
+<li class="toctree-l2"><a class="reference external" href="builtin-methods.html#integer">Integer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="control.html">Control Structures</a><ul>
+<li class="toctree-l2"><a class="reference external" href="control.html#conditionals">Conditionals</a><ul>
+<li class="toctree-l3"><a class="reference external" href="control.html#if-statement">If Statement</a></li>
+<li class="toctree-l3"><a class="reference external" href="control.html#switch-statement">Switch Statement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="control.html#loops">Loops</a><ul>
+<li class="toctree-l3"><a class="reference external" href="control.html#while-statement">While Statement</a></li>
+<li class="toctree-l3"><a class="reference external" href="control.html#loop-statement">Loop Statement</a></li>
+<li class="toctree-l3"><a class="reference external" href="control.html#for-statement">For Statement</a></li>
+<li class="toctree-l3"><a class="reference external" href="control.html#break-statement">Break Statement</a></li>
+<li class="toctree-l3"><a class="reference external" href="control.html#continue-statement">Continue Statement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="control.html#require">Require</a></li>
+<li class="toctree-l2"><a class="reference external" href="control.html#let">Let</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="functions.html">Calling Functions</a></li>
+<li class="toctree-l1"><a class="reference external" href="optimizers.html">Custom optimizers</a></li>
+<li class="toctree-l1"><a class="reference external" href="config.html">Configuration File</a><ul>
+<li class="toctree-l2"><a class="reference external" href="config.html#namespace">namespace</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#name">name</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#description">description</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#author">author</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#version">version</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#warnings">warnings</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#optimizations">optimizations</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#globals">globals</a></li>
+<li class="toctree-l2"><a class="reference external" href="config.html#info">info</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="globals.html">Extension Globals</a></li>
+<li class="toctree-l1"><a class="reference external" href="phpinfo.html">Phpinfo() sections</a></li>
+<li class="toctree-l1"><a class="reference external" href="optimizations.html">Optimizations</a><ul>
+<li class="toctree-l2"><a class="reference external" href="optimizations.html#static-type-inference">static-type-inference</a></li>
+<li class="toctree-l2"><a class="reference external" href="optimizations.html#static-type-inference-second-pass">static-type-inference-second-pass</a></li>
+<li class="toctree-l2"><a class="reference external" href="optimizations.html#local-context-pass">local-context-pass</a></li>
+<li class="toctree-l2"><a class="reference external" href="optimizations.html#constant-folding">constant-folding</a></li>
+<li class="toctree-l2"><a class="reference external" href="optimizations.html#static-constant-class-folding">static-constant-class-folding</a></li>
+<li class="toctree-l2"><a class="reference external" href="optimizations.html#call-gatherer-pass">call-gatherer-pass</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="warnings.html">Compiler Warnings</a><ul>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#unused-variable">unused-variable</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#unused-variable-external">unused-variable-external</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#possible-wrong-parameter-undefined">possible-wrong-parameter-undefined</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#nonexistent-function">nonexistent-function</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#nonexistent-class">nonexistent-class</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#non-valid-isset">non-valid-isset</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#non-array-update">non-array-update</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#non-valid-objectupdate">non-valid-objectupdate</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#non-valid-fetch">non-valid-fetch</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#invalid-array-index">invalid-array-index</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#non-array-append">non-array-append</a></li>
+<li class="toctree-l2"><a class="reference external" href="warnings.html#id1">non-array-append</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="license.html">License</a></li>
+</ul>
+</div>
+<div class="section" id="other-formats">
+<h2>Other Formats<a class="headerlink" href="#other-formats" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="javascript:;">PDF[暂时失效]</a></li>
+</ul>
+<span class="target" id="index-0"></span></div>
+</div>
+
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <div class="related">
+      <ul>
+        <li class="right" >
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="welcome.html" title="Welcome!"
+             >next</a> |</li> 
+      </ul>
+    </div>
+        <div id="footer">
+
+          <p>Zephir Language is an open source project licensed under
+            <a href="http://zephir-lang.com/license.html">MIT license.</a></p>
+
+          <p>Except where otherwise noted, content on this site is licensed under the
+            <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License.</a></p>
+             Last updated on Sep 01, 2014.
+            V0.4.2 <a href="https://github.com/NumbDai/zephirlang.com">GitHub</a>
+
+          <p>
+             &copy; Copyright 2013-2014, Zephir Team.
+          </p>
+
+        </div>
+
+    </div>
+  </body>
+</html>
